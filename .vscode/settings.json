@@ -1,0 +1,11 @@
+{
+    "editor.formatOnSave": true,
+    "laravel-pint.enable": true,
+    "editor.defaultFormatter": "open-southeners.laravel-pint",
+    "[dockercompose]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[php]": {
+        "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    }
+}
