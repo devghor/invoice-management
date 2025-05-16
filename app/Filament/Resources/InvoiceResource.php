@@ -73,6 +73,8 @@ class InvoiceResource extends Resource
                                         $product = Product::find($state);
                                         if ($product) {
                                             $set('brand', $product->brand);
+                                            $set('mc_name', $product->mc_name);
+                                            $set('p_no', $product->p_no);
                                             $qty = $get('qty');
                                             $set('price_rate', $product->price);
                                             if ($qty) {
@@ -81,10 +83,13 @@ class InvoiceResource extends Resource
                                         }
                                     }),
 
-                                TextInput::make('brand')->readOnly(),
+                                TextInput::make('mc_name'),
+                                TextInput::make('p_no'),
+                                TextInput::make('brand'),
                                 TextInput::make('qty')
                                     ->label('Qty')
                                     ->live()
+                                    ->numeric()
                                     ->afterStateUpdated(function ($get, $set, $state) {
                                         $qty = $state;
                                         $priceRate = $get('price_rate');
@@ -92,8 +97,8 @@ class InvoiceResource extends Resource
                                             $set('total_price', $qty * $priceRate);
                                         }
                                     }),
-                                TextInput::make('price_rate')->label('Rate'),
-                                TextInput::make('total_price')->label('Amount'),
+                                TextInput::make('price_rate')->label('Rate')->numeric(),
+                                TextInput::make('total_price')->label('Amount')->numeric(),
                             ])
                             ->live()
                             ->afterStateUpdated(function ($get, $set) {

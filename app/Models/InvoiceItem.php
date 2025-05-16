@@ -14,7 +14,9 @@ class InvoiceItem extends Model
         'qty',
         'price_rate',
         'total_price',
-        'brand'
+        'brand',
+        'mc_name',
+        'p_no'
     ];
 
     public function invoice()

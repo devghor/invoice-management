@@ -37,8 +37,11 @@ class ProductResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('brand')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('unit')
-                            ->maxLength(255),
+                        Forms\Components\Select::make('unit')
+                            ->options([
+                                'pc' => 'pc',
+                                'kg' => 'kg'
+                            ]),
                         Forms\Components\TextInput::make('price')
                             ->numeric()
                             ->prefix('৳'),
@@ -61,6 +64,7 @@ class ProductResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->money('BDT')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
