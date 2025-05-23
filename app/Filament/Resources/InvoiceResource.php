@@ -53,7 +53,11 @@ class InvoiceResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('chalan_no')
                             ->maxLength(255),
-                        DatePicker::make('invoice_date'),
+                        DatePicker::make('invoice_date')
+                            ->label('Invoice Date')
+                            ->displayFormat('d/m/Y')
+                            ->native(false)
+                            ->format('Y-m-d'),
                         // TextInput::make('net_price')->readOnly()->label('Net Price'),
                     ]),
 
@@ -61,26 +65,22 @@ class InvoiceResource extends Resource
                     ->schema([
                         Repeater::make('invoiceItems')
                             ->relationship()
-                            ->columns(6)
+                            ->columns(8)
                             ->schema([
                                 TextInput::make('rq_sl')->label('R.Q S.L'),
                                 Select::make('product_id')
                                     ->label('Product')
                                     ->options(Product::orderBy('name', 'ASC')->get()->pluck('name', 'id'))
                                     ->required()
-                                    ->live()
+                                    ->live(debounce: 1000)
                                     ->afterStateUpdated(function ($get, $set, $state) {
                                         $product = Product::find($state);
-                                        if ($product) {
-                                            $set('brand', $product->brand);
-                                            $set('mc_name', $product->mc_name);
-                                            $set('p_no', $product->p_no);
-                                            $qty = $get('qty');
-                                            $set('price_rate', $product->price);
-                                            if ($qty) {
-                                                $set('total_price', $qty * $product->price_rate);
-                                            }
-                                        }
+                                        $set('brand', $product->brand ?? '');
+                                        $set('mc_name', $product->mc_name ?? '');
+                                        $set('p_no', $product->p_no ?? '');
+                                        $qty = $get('qty');
+                                        $set('price_rate', $product->price ?? '');
+                                        $set('total_price', $qty * $product?->price_rate);
                                     }),
 
                                 TextInput::make('mc_name'),
@@ -88,16 +88,18 @@ class InvoiceResource extends Resource
                                 TextInput::make('brand'),
                                 TextInput::make('qty')
                                     ->label('Qty')
-                                    ->live()
                                     ->numeric()
+                                    ->live(debounce: 1000)
                                     ->afterStateUpdated(function ($get, $set, $state) {
-                                        $qty = $state;
-                                        $priceRate = $get('price_rate');
-                                        if ($priceRate && $qty) {
-                                            $set('total_price', $qty * $priceRate);
-                                        }
+                                        $set('total_price', $state * $get('price_rate'));
                                     }),
-                                TextInput::make('price_rate')->label('Rate')->numeric(),
+                                TextInput::make('price_rate')
+                                    ->label('Rate')
+                                    ->numeric()
+                                    ->live(debounce: 1000)
+                                    ->afterStateUpdated(function ($get, $set, $state) {
+                                        $set('total_price', $get('qty') * $state);
+                                    }),
                                 TextInput::make('total_price')->label('Amount')->numeric(),
                             ])
                             ->live()
