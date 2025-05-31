@@ -12,7 +12,7 @@ final class UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
-        if (User::query()->where('email', 'sa@app.com')->doesntExist()) {
+        if (!User::query()->where('email', 'sa@app.com')->exists()) {
             UserFactory::new()->createOne([
                 'email' => 'sa@app.com',
             ]);

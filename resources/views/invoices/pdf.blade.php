@@ -1,9 +1,21 @@
+<!DOCTYPE html>
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Invoice</title>
     <style>
+        @font-face {
+            font-family: 'SolaimanLipi', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{ resource_path('fonts/SolaimanLipi.ttf') }}') format('truetype');
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'SolaimanLipi', sans-serif;
             font-size: 12px;
         }
 
@@ -69,6 +81,7 @@
 
     <div class="header">
         <h1>{{ $invoice->company->name_en ?? '' }}</h1>
+        {{-- <h1 class="bangla">{{ $invoice->company->name_bn ?? '' }}</h1> --}}
         <p>{{ $invoice->company->address ?? '' }}</p>
         @php
             $phone = $invoice->company->mobile_no ?? '';
@@ -85,6 +98,7 @@
 
     <div class="info">
         <p><strong>Bill No:</strong> {{ $invoice->bill_no }}</p>
+        <p><strong>Chalan No:</strong> {{ $invoice->chalan_no }}</p>
         <p><strong>Date:</strong> {{ $invoice->invoice_date ? $invoice->invoice_date->format('d/m/Y') : null }}</p>
         <p><strong>Name:</strong> {{ $invoice->customer->name ?? '' }}</p>
         <p><strong>Address:</strong> {{ $invoice->customer->address ?? '' }}</p>
@@ -113,8 +127,8 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item->rq_sl }}</td>
                     <td>{{ $item->product->name ?? '' }}</td>
-                    <td>{{ $item->product->mc_name ?? '' }}</td>
-                    <td>{{ $item->product->p_no }}</td>
+                    <td>{{ $item->mc_name ?? '' }}</td>
+                    <td>{{ $item->p_no }}</td>
                     <td>{{ $item->brand }}</td>
                     <td>{{ $item->qty }}</td>
                     <td>{{ number_format($item->price_rate, 2) }}</td>

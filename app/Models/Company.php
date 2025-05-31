@@ -10,7 +10,7 @@ class Company extends Model
         'name_en',
         'name_bn',
         'address',
-        'mobel_no',
+        'mobile_no',
         'email',
     ];
 }

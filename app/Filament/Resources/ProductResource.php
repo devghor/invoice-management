@@ -32,8 +32,10 @@ class ProductResource extends Resource
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('mc_name')
+                            ->label('Machine Name')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('p_no')
+                            ->label('Parts No')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('brand')
                             ->maxLength(255),
@@ -57,8 +59,10 @@ class ProductResource extends Resource
                     ->searchable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mc_name')
+                    ->label('Machine Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('p_no')
+                    ->label('Parts No')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('brand')
                     ->searchable(),

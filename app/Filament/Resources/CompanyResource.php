@@ -37,7 +37,7 @@ class CompanyResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('address')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('mobel_no')
+                        Forms\Components\TextInput::make('mobile_no')
                             ->label('Mobile')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('email')
@@ -58,7 +58,7 @@ class CompanyResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('mobel_no')
+                Tables\Columns\TextColumn::make('mobile_no')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
